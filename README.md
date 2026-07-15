@@ -12,7 +12,7 @@ Trade Friend is an interactive web application designed to help investors and fi
 
 ## 🚀 Live Demo
 
-🌐 **Web App:** `Coming Soon`
+🌐 **Web App:** [Streamlit Web App](https://trade-friend.streamlit.app/)
 
 ---
 
