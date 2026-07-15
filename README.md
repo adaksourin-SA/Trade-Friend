@@ -1,6 +1,6 @@
 # 📈 Trade Friend
 
-> **A comprehensive Stock Analysis Dashboard for the Indian Stock Market built with Streamlit, Plotly, Yahoo Finance and Python.**
+> **A comprehensive Stock Analysis Dashboard for the Indian Stock Market (NIFTY500) built with Streamlit, Plotly, Yahoo Finance and Python.**
 
 Trade Friend is an interactive web application designed to help investors and finance enthusiasts analyze Indian stocks using modern visualization techniques and financial models. The application currently provides company fundamentals, technical analysis, and Capital Asset Pricing Model (CAPM) based stock comparison.
 
@@ -188,63 +188,24 @@ along with the regression line used to estimate beta.
 
 # 🎬 Application Demo
 
-## Home Page
+## Stock Analysis
 
-> **GIF Placeholder**
+![StockAnalysis](assests/1.gif)
 
 ```text
-assets/gifs/home_page.gif
+assets/1.gif
 ```
 
 ---
 
-## Company Overview
+## CAPM Comparison
 
-> **GIF Placeholder**
-
-```text
-assets/gifs/company_overview.gif
-```
-
----
-
-## Technical Indicators
-
-> **GIF Placeholder**
+![StockAnalysis](assests/2.gif)
 
 ```text
-assets/gifs/technical_indicators.gif
+assets/2.gif
 ```
 
----
-
-## CAPM Dashboard
-
-> **GIF Placeholder**
-
-```text
-assets/gifs/capm_dashboard.gif
-```
-
----
-
-## Stock Comparison
-
-> **GIF Placeholder**
-
-```text
-assets/gifs/stock_comparison.gif
-```
-
----
-
-## Security Characteristic Line
-
-> **GIF Placeholder**
-
-```text
-assets/gifs/security_characteristic_line.gif
-```
 ---
 
 # 📂 Project Structure
@@ -253,6 +214,7 @@ assets/gifs/security_characteristic_line.gif
 Trade_Friend/
 │
 ├── pages/
+│   ├── Stock_Analysis.py             # Stock Analysis dashboard
 │   └── CAPM_Stock_Comparison.py      # CAPM Stock Comparison dashboard
 │
 ├── utils/
@@ -260,7 +222,7 @@ Trade_Friend/
 │   └── CAPM_functions.py             # Utility functions
 │
 ├── Get_Data.ipynb                    # Experimental notebook (development only)
-├── Trade_Friend.py                   # Main Streamlit application
+├── Trade_Friend.py                   # Main Streamlit application + Landing page
 ├── requirements.txt
 └── README.md
 ```
@@ -320,7 +282,7 @@ Market Benchmark:
 Clone the repository
 
 ```bash
-git clone https://github.com/<username>/Trade_Friend.git
+git clone https://github.com/adaksourin-SA/Trade-Friend.git
 ```
 
 Navigate to the project directory
@@ -353,12 +315,6 @@ If you would like to contribute:
 2. Create a feature branch
 3. Commit your changes
 4. Open a Pull Request
-
----
-
-# 📄 License
-
-This project is licensed under the **MIT License**.
 
 ---
 
