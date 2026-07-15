@@ -5,6 +5,8 @@ import plotly.graph_objects as go
 import numpy as np
 from datetime import date as dt
 import pandas_ta as pta
+import json
+from pathlib import Path
 import warnings
 warnings.filterwarnings('ignore')
 
@@ -84,29 +86,53 @@ def get_rm(period=10):
     return daily_return(onlymarket["Close"])['^CRSLDX'].mean() * 252 # About 252 trading days in a year
 
 def get_info(ticker):
-    yfticker = yf.Ticker(ticker)
-    info = yfticker.info
+    try:
+        yfticker = yf.Ticker(ticker)
+        info = yfticker.info
 
-    fundamentals = {
-        "Market Cap": f"₹{info.get("marketCap") / 1e7:,.0f} Cr",
-        "P/E (TTM)": info.get("trailingPE"),
-        "P/B": info.get("priceToBook"),
-        "ROE (%)": (
-            round(info["returnOnEquity"] * 100, 2)
-            if info.get("returnOnEquity") is not None else None
-        ),
-        "EPS (TTM)": info.get("trailingEps"),
-        "Dividend Yield (%)": (
-            round(info["dividendYield"] * 100, 2)
-            if info.get("dividendYield") is not None else None
-        ),
-        "Debt-to-Equity": info.get("debtToEquity"),
-        "52 Week High": info.get("fiftyTwoWeekHigh"),
-        "52 Week Low": info.get("fiftyTwoWeekLow"),
-        "Beta": info.get("beta"),
-        "Sector": info.get("sector"),
-        "Industry": info.get("industry")
-    }
+        fundamentals = {
+            "Market Cap": (f"₹{info.get("marketCap") / 1e7:,.0f} Cr"
+            if info.get("marketCap") is not None else None
+            ),
+            "P/E (TTM)": (
+                round(info.get("trailingPE"), 2)
+                if info.get("trailingPE") is not None else None
+            ),
+            "P/B": (
+                round(info.get("priceToBook"), 2)
+                if info.get("priceToBook") is not None else None
+            ),
+            "ROE (%)": (
+                round(info["returnOnEquity"] * 100, 2)
+                if info.get("returnOnEquity") is not None else None
+            ),
+            "EPS (TTM)": info.get("trailingEps"),
+            "Dividend Yield (%)": (
+                round(info["dividendYield"] * 100, 2)
+                if info.get("dividendYield") is not None else None
+            ),
+            "Debt-to-Equity": info.get("debtToEquity"),
+            "52 Week High": info.get("fiftyTwoWeekHigh"),
+            "52 Week Low": info.get("fiftyTwoWeekLow"),
+            "Beta": info.get("beta"),
+            "Sector": info.get("sector"),
+            "Industry": info.get("industry")
+        }
+        description = info.get('longBusinessSummary')
+        ftEmployees = info.get('fullTimeEmployees')
+        website = info.get('website')
+    except:
+        json_path = Path(__file__).parent / "stock_fundamentals.json"
+        with open(json_path, "r", encoding="utf-8") as f:
+            stock_info = json.load(f)
+            fundamentals = stock_info[ticker]
+
+            description = fundamentals['longBusinessSummary']
+            ftEmployees = fundamentals['fullTimeEmployees']
+            website = fundamentals['website']
+            del fundamentals['longBusinessSummary']
+            del fundamentals['fullTimeEmployees']
+            del fundamentals['website']
 
     fundm = pd.DataFrame(
         columns= ['Metric', 'Values']
@@ -114,11 +140,6 @@ def get_info(ticker):
     fundm['Metric'] = fundamentals.keys()
     fundm['Values'] = fundamentals.values()
     fundm["Values"] = fundm["Values"].astype(str)
-
-
-    description = info.get('longBusinessSummary')
-    ftEmployees = info.get('fullTimeEmployees')
-    website = info.get('website')
 
     return description, website, ftEmployees, fundm
 
