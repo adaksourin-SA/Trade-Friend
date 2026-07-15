@@ -1,0 +1,9 @@
+streamlit
+datetime
+warnings
+pandas
+yfinance
+plotly
+numpy
+pandas_ta
+statsmodels
